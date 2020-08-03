@@ -33,17 +33,31 @@ const Alert = styled.div`
 `;
 
 function Lane({
-  title, loading, error, tickets,
+  title,
+  loading,
+  error,
+  tickets,
+  onDragStart,
+  onDragOver,
+  laneId,
+  onDrop,
 }) {
   return (
-    <LaneWrapper>
+    <LaneWrapper
+      onDragOver={(e) => onDragOver(e)}
+      onDrop={(e) => onDrop(e, laneId)}
+    >
       <Title>{title}</Title>
       {(loading || error) && (
         <Alert>{loading ? 'Loading...' : error}</Alert>
       )}
       <TicketsWrapper>
         {tickets.map((ticket) => (
-          <Ticket key={ticket.id} ticket={ticket} />
+          <Ticket
+            key={ticket.id}
+            onDragStart={onDragStart}
+            ticket={ticket}
+          />
         ))}
       </TicketsWrapper>
     </LaneWrapper>
